@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskDetail">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.116" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="340dp"
+        android:layout_height="399dp"
+        android:text=" Pirate Ipsum The best Lorem Ipsum Generator in all the sea! Heave this scurvy copyfiller fer yar next adventure and cajol yar clients into walking the plank with ev'ry layout! Configure above, then get yer pirate ipsum...own the high seas, arg!  Yar Pirate Ipsum Tender holystone brigantine Sail ho run a rig Shiver me timbers Blimey fire in the hole Letter of Marque shrouds. Fathom barque ballast crow's nest pillage lanyard hogshead bring a spring upon her cable booty scallywag. Draught black spot Sail ho reef sails keel belay gabion run a rig hempen halter Pirate Round.  Trysail bilge rat boatswain cackle fruit capstan long clothes careen keelhaul killick scurvy. Davy Jones' Locker pillage trysail nipper schooner rigging pressgang gangplank chandler aft. Wench nipperkin pink carouser Sail ho snow smartly topmast Spanish Main yo-ho-ho.  Nipper scourge of the seven seas man-of-war Davy Jones' Locker landlubber or just lubber ye mizzenmast quarterdeck splice the main brace port. To go on account weigh anchor Plate Fleet tackle topgallant avast long boat spyglass run a shot across the bow hearties. Provost heave to gally lanyard line scuttle fluke spirits bounty sloop."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.439" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
