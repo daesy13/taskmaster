@@ -1,14 +1,11 @@
-package com.example.taskmaster;
+package com.daesy.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +32,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent goToAllTask = new Intent(MainActivity.this, AllTask.class);
                 MainActivity.this.startActivity(goToAllTask);
+            }
+        });
+
+        // GO TO SETTINGS
+        Button goToSettingsPage = findViewById(R.id.button8);
+        goToSettingsPage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent goToSettings = new Intent(MainActivity.this, Settings.class);
+                MainActivity.this.startActivity(goToSettings);
             }
         });
     }
