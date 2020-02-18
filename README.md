@@ -17,4 +17,30 @@ width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1581992549.png"
 width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1581993139.png"
-width=150;  margin-right= 10px;/>
+width=150;  margin-right= 10px;/></br></br></br>
+
+
+# LAB 27 - Data in TaskMaster
+
+## Feature Tasks
+**Task Detail Page**</br>
+Created a Task Detail page. It has a title at the top of the page, and a Lorem Ipsum description.</br>
+
+**Settings Page**</br>
+Created a Settings page. This page allow users to enter their username and hit save.</br>
+
+**Homepage**</br>
+The main front page has three different buttons with hardcoded task titles. When a user taps one of the tasks, it goes to the Task Detail page, the task is displayed as a title at the top of the Detail page.</br>
+
+The homepage contains a button to visit the Settings page, and once the user has entered their username, it will display “{username}’s tasks” above the three task buttons.</br>
+
+<img src="/screenshots/Screenshot_1582012418.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582012427.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582012433.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582012438.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582012443.png"
+     width=150;  margin-right= 10px;/>

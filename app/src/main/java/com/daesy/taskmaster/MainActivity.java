@@ -3,9 +3,12 @@ package com.daesy.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(goToAddTask);
             }
         });
-
 
         // GO TO ALL TASK
         Button goToAllTaskPage = findViewById(R.id.button2);
@@ -44,5 +46,74 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(goToSettings);
             }
         });
+
+        // FIRST TASK GO TO DETAIL PAGE
+        Button firstGoToDetailPage = findViewById(R.id.button5);
+        firstGoToDetailPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
+                MainActivity.this.startActivity(goToSettings);
+
+                TextView titleOne = findViewById(R.id.button5);
+
+                SharedPreferences taskOne =
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = taskOne.edit();
+                editor.putString("task", titleOne.getText().toString());
+                editor.apply();
+            }
+        });
+
+        // SECOND TASK GO TO DETAIL PAGE
+        Button secondGoToDetailPage = findViewById(R.id.button6);
+        secondGoToDetailPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
+                MainActivity.this.startActivity(goToSettings);
+
+                TextView titleTwo = findViewById(R.id.button6);
+
+                SharedPreferences taskTwo =
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = taskTwo.edit();
+                editor.putString("task", titleTwo.getText().toString());
+                editor.apply();
+            }
+        });
+
+        // THIRD TASK GO TO DETAIL PAGE
+        Button thirdGoToDetailPage = findViewById(R.id.button7);
+        thirdGoToDetailPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
+                MainActivity.this.startActivity(goToSettings);
+
+                TextView titleThree = findViewById(R.id.button7);
+
+                SharedPreferences taskThree =
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = taskThree.edit();
+                editor.putString("task", titleThree.getText().toString());
+                editor.apply();
+            }
+        });
+    }
+
+    // GETTING USERNAME
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences userName =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String name = userName.getString("name", "default");
+
+        if (name != "default") {
+            TextView greeting = findViewById(R.id.textView3);
+            greeting.setText(name + "'s Tasks");
+        }
     }
 }
