@@ -22,7 +22,6 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-
         // log for oncreate success
         Log.w(TAGADD, "we are in onCreate");
 
@@ -34,6 +33,5 @@ public class AddTask extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
     }
 }
