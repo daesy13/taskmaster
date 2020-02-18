@@ -1,14 +1,12 @@
 # LAB 26 - Beginning TaskMaster
 
-## Feature Tasks
-**Homepage**</br>
-The main page has a heading at the top of the page, an image to mock the “my tasks” view, and buttons at the bottom of the page to allow going to the “add tasks” and “all tasks” page.</br>
-
-**Add a Task**</br>
-On the “Add a Task” page, it allows users to type in details about a new task, specifically a title and a body. When users click the “submit” button, it shows a “submitted!” label on the page.</br>
-
-**All Tasks**</br>
-The all tasks page shows an image with a back button; it has no functionality for the moment.</br>
+## Daily Log
+- [x] Main page has a heading at the top of the page.
+- [x] An image to mock “my tasks” view.
+- [x] Buttons at the bottom of the page to allow going to the “add tasks” and “all tasks” page.
+- [x] On the “Add a Task” page, allows users to type in details about a new task, specifically a title and a body. 
+- [x] When users click the “submit” button, it shows a “submitted!” label on the page.
+- [x] All tasks page shows an image with a back button with no functionality for the moment.</br>
 
 <img src="/screenshots/Screenshot_1581457330.png"
      width=150;  margin-right= 10px;/>
@@ -22,17 +20,11 @@ width=150;  margin-right= 10px;/></br></br></br>
 
 # LAB 27 - Data in TaskMaster
 
-## Feature Tasks
-**Task Detail Page**</br>
-Created a Task Detail page. It has a title at the top of the page, and a Lorem Ipsum description.</br>
-
-**Settings Page**</br>
-Created a Settings page. This page allow users to enter their username and hit save.</br>
-
-**Homepage**</br>
-The main front page has three different buttons with hardcoded task titles. When a user taps one of the tasks, it goes to the Task Detail page, the task is displayed as a title at the top of the Detail page.</br>
-
-The homepage contains a button to visit the Settings page, and once the user has entered their username, it will display “{username}’s tasks” above the three task buttons.</br>
+## Daily Log
+- [x] Create a Task Detail page. It should have a title at the top of the page, and a Lorem Ipsum description.
+- [x] Create a Settings page. Where users enter their username and hit save.
+- [x] The main front page should have three different buttons with hardcoded task titles. When a user taps one of the tasks, it goes to the Task Detail page, the task is displayed as a title at the top of the Detail page.
+- [x] The homepage contains a button to visit the Settings page, and once the user has entered their username, it will display “{username}’s tasks” above the three task buttons.</br>
 
 <img src="/screenshots/Screenshot_1582012418.png"
      width=150;  margin-right= 10px;/>
@@ -43,4 +35,19 @@ The homepage contains a button to visit the Settings page, and once the user has
 <img src="/screenshots/Screenshot_1582012438.png"
      width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1582012443.png"
-     width=150;  margin-right= 10px;/>
+     width=150;  margin-right= 10px;/></br></br></br>
+
+# LAB 28 - RecyclerView
+
+## Daily Log
+- [x] Create a Task class with a title, a body, and a state. 
+- [x]  state could be “new”, “assigned”, “in progress”, or “complete”.
+
+- [x] Refactor homepage to use a RecyclerView for displaying Task data. This should have hardcoded Task data for now.
+- [x] When tap on any one of the Tasks in the RecyclerView, it should appropriately launch the detail page with the correct Task title displayed.
+</br>
+
+<img src="/screenshots/Screenshot_1582024395.png"
+width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582025809.png"
+width=150;  margin-right= 10px;/></br></br></br>
