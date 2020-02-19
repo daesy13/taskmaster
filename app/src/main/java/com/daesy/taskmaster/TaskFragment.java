@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,14 +73,13 @@ public class TaskFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            List<Task> listOfTasks = new ArrayList<>();
-            listOfTasks.add(new Task("Wake up", "at 8 am", "in progress"));
-            listOfTasks.add(new Task("Make bed", "every morning", "new"));
-            listOfTasks.add(new Task("Take a shower", "every day", "assigned"));
-            listOfTasks.add(new Task("Eat Breakfast", "and coffee", "complete"));
-            listOfTasks.add(new Task("Brush Teeth", "after coffee", "new"));
-            listOfTasks.add(new Task("Leave house", "at 9:30 am", "assigned"));
-            listOfTasks.add(new Task("Take the bus", "at 9:45 am", "in progress"));
+//            List<Task> listOfTasks = new ArrayList<>();
+            MyDatabase db = Room.databaseBuilder(this.getContext().getApplicationContext(),
+                    MyDatabase.class, "task")
+                    .allowMainThreadQueries()
+                    .build();
+            TaskDao dao = db.taskDao();
+            List<Task> listOfTasks = dao.getAll();
             recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(listOfTasks, null, context));
         }
         return view;

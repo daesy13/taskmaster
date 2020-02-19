@@ -1,8 +1,22 @@
 package com.daesy.taskmaster;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Task {
+
+    @PrimaryKey(autoGenerate = true)
+    public long id;
+
+    @ColumnInfo
     public String title;
+
+    @ColumnInfo
     public String body;
+
+    @ColumnInfo
     public String state;
 
     public Task(String title, String body, String state) {
@@ -34,4 +48,5 @@ public class Task {
     public void setState(String state) {
         this.state = state;
     }
+
 }
