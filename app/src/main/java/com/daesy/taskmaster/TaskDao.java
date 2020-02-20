@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM task")
-    List<Task> getAll();
+    List<Task> getTasks();
 
 //    @Query("SELECT * FROM task WHERE id = :id")
 //    Task getOne(long id);

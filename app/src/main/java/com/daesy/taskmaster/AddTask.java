@@ -15,7 +15,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class AddTask extends AppCompatActivity {
 
+    MyDatabase db;
+
     static String TAGADD = "va.addTask";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
