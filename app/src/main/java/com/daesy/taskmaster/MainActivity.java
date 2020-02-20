@@ -1,6 +1,8 @@
 package com.daesy.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +11,12 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    static MyDatabase db;
+    List<Task> listOfTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,5 +121,10 @@ public class MainActivity extends AppCompatActivity {
             TextView greeting = findViewById(R.id.textView3);
             greeting.setText(name + "'s Tasks");
         }
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        db = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "task").allowMainThreadQueries().build();
+
     }
 }

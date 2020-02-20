@@ -2,6 +2,7 @@ package com.daesy.taskmaster;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -24,6 +25,9 @@ public class Task {
         this.body = body;
         this.state = state;
     }
+
+    @Ignore
+    public Task(){}
 
     public String getTitle() {
         return title;
