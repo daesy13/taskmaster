@@ -51,3 +51,18 @@ width=150;  margin-right= 10px;/></br></br></br>
 width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1582025809.png"
 width=150;  margin-right= 10px;/></br></br></br>
+
+# LAB 29 - Room
+
+## Daily Log
+
+- [x] Set up Room in the application.
+- [x] Modify Task class to be an Entity.
+- [x] Modify the Add Task form to save the data entered in as a Task in your local database.
+- [x] Refactor your homepage’s RecyclerView to display all Task entities in your database.
+- [x] Ensure that the description and status of a tapped task are also displayed on the detail page.
+</br>
+<img src="/screenshots/Screenshot_1582506163.png"
+width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582506167.png"
+width=150;  margin-right= 10px;/></br></br></br>

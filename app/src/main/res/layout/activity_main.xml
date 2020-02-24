@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskRecyclerView" />
 
     <Button
         android:id="@+id/button2"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskRecyclerView" />
 
     <Button
         android:id="@+id/button8"
@@ -56,9 +56,9 @@
         app:layout_constraintVertical_bias="0.049" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="408dp"
-        android:layout_height="422dp"
+        android:id="@+id/taskRecyclerView"
+        android:layout_width="388dp"
+        android:layout_height="385dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,14 +66,16 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.daesy.taskmaster.TaskFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:name="com.daesy.taskmaster.fragments.TaskFragment"
+        android:layout_width="395dp"
+        android:layout_height="357dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

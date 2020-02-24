@@ -2,10 +2,8 @@ package com.daesy.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class TaskDetail extends AppCompatActivity {
@@ -21,34 +19,24 @@ public class TaskDetail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        String taskTitle = getIntent().getStringExtra("task");
-        TextView title = findViewById(R.id.textView7);
-        title.setText(taskTitle);
+//        String taskTitle = getIntent().getStringExtra("task");
+//        TextView title = findViewById(R.id.textView7);
+//        title.setText(taskTitle);
 
-//        SharedPreferences taskOne =
-//                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String taskOneTitle = taskOne.getString("task", "default");
-//
-//        SharedPreferences taskTwo =
-//                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String taskTwoTitle = taskTwo.getString("task", "default");
-//
-//        SharedPreferences taskThree =
-//                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String taskThreeTitle = taskThree.getString("task", "default");
-//
-//        if (taskOneTitle != "default") {
-//            TextView title = findViewById(R.id.textView7);
-//            title.setText(taskOneTitle);
-//        }
-//        else if (taskTwoTitle != "default") {
-//            TextView title = findViewById(R.id.textView7);
-//            title.setText(taskTwoTitle);
-//        }
-//        else if (taskThreeTitle != "default") {
-//            TextView title = findViewById(R.id.textView7);
-//            title.setText(taskThreeTitle);
-//        }
+        Intent i = getIntent();
+
+        String title = i.getExtras().getString("taskTitle");
+        String body = i.getExtras().getString("taskBody");
+        String state = i.getExtras().getString("taskState");
+
+        TextView titleView = findViewById(R.id.detailTitle);
+        TextView bodyView = findViewById(R.id.detailBody);
+        TextView stateView = findViewById(R.id.stateView);
+
+
+        titleView.setText(title);
+        bodyView.setText(body);
+        stateView.setText(state);
+
     }
-
 }
