@@ -1,6 +1,5 @@
-package com.daesy.taskmaster;
+package com.daesy.taskmaster.models;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -11,22 +10,18 @@ public class Task {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
-    @ColumnInfo
     public String title;
-
-    @ColumnInfo
     public String body;
-
-    @ColumnInfo
     public String state;
 
-    public Task(String title, String body, String state) {
+    @Ignore
+    public Task(String title, String body) {
         this.title = title;
         this.body = body;
-        this.state = state;
+        this.state = "New";
     }
 
-    @Ignore
+
     public Task(){}
 
     public String getTitle() {

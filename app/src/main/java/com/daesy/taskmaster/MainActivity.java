@@ -1,29 +1,47 @@
 package com.daesy.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Insert;
 import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.daesy.taskmaster.models.Task;
+
+import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.OnTaskSelectedListener {
+
+    private static final String TAG = "ds.MainActivity";
 
     static MyDatabase db;
     List<Task> listOfTasks;
+    private RecyclerView recyclerView;
+    private MyTaskRecyclerViewAdapter myTaskAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // GO TO ADD TASK
+
+
+        // ***** THIS WILL CLEAR DB*****
+//        db.taskDao().deleteAllTask();
+
+        this.listOfTasks = new LinkedList<>();
+
+        // BUTTON GO TO ADD TASK
         Button goToAddTaskPage = findViewById(R.id.button);
         goToAddTaskPage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -33,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // GO TO ALL TASK
+        // BUTTON GO TO ALL TASK
         Button goToAllTaskPage = findViewById(R.id.button2);
         goToAllTaskPage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -43,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // GO TO SETTINGS
+        // BUTTON GO TO SETTINGS
         Button goToSettingsPage = findViewById(R.id.button8);
         goToSettingsPage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,60 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(goToSettings);
             }
         });
-
-//        // FIRST TASK GO TO DETAIL PAGE
-//        Button firstGoToDetailPage = findViewById(R.id.button5);
-//        firstGoToDetailPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
-//                MainActivity.this.startActivity(goToSettings);
-//
-//                TextView titleOne = findViewById(R.id.button5);
-//
-//                SharedPreferences taskOne =
-//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                SharedPreferences.Editor editor = taskOne.edit();
-//                editor.putString("task", titleOne.getText().toString());
-//                editor.apply();
-//            }
-//        });
-//
-//        // SECOND TASK GO TO DETAIL PAGE
-//        Button secondGoToDetailPage = findViewById(R.id.button6);
-//        secondGoToDetailPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
-//                MainActivity.this.startActivity(goToSettings);
-//
-//                TextView titleTwo = findViewById(R.id.button6);
-//
-//                SharedPreferences taskTwo =
-//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                SharedPreferences.Editor editor = taskTwo.edit();
-//                editor.putString("task", titleTwo.getText().toString());
-//                editor.apply();
-//            }
-//        });
-//
-//        // THIRD TASK GO TO DETAIL PAGE
-//        Button thirdGoToDetailPage = findViewById(R.id.button7);
-//        thirdGoToDetailPage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent goToSettings = new Intent(MainActivity.this, TaskDetail.class);
-//                MainActivity.this.startActivity(goToSettings);
-//
-//                TextView titleThree = findViewById(R.id.button7);
-//
-//                SharedPreferences taskThree =
-//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                SharedPreferences.Editor editor = taskThree.edit();
-//                editor.putString("task", titleThree.getText().toString());
-//                editor.apply();
-//            }
-//        });
     }
 
     // GETTING USERNAME
@@ -122,9 +86,38 @@ public class MainActivity extends AppCompatActivity {
             greeting.setText(name + "'s Tasks");
         }
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
+                .allowMainThreadQueries().build();
 
-        db = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "task").allowMainThreadQueries().build();
 
+        this.listOfTasks.clear();
+        // Adding all the list from the database to the recycler view
+        this.listOfTasks.addAll(this.db.taskDao().getAll());
+
+        //***RECYCLER VIEW SETUP***
+        this.recyclerView = findViewById(R.id.taskRecyclerView);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
+        this.recyclerView.setAdapter(this.myTaskAdapter);
+
+        // ***** THIS WILL CLEAR DB*****
+//        db.taskDao().deleteAllTask();
+
+        // this triggers recycler view to update
+//        this.myTaskAdapter.notifyDataSetChanged();
     }
+
+
+    // THIS METHODS DEFINE WHATS HAPPENED WHEN I TASK IS CLICK IN THE RECYCLER VIEW
+    @Override
+    public void onTaskSelected(Task task){
+        Log.i(TAG, "task title:" +  task.getTitle());
+        Intent goToDetail = new Intent(this, TaskDetail.class);
+        goToDetail.putExtra("taskTitle", task.getTitle());
+        goToDetail.putExtra("taskBody", task.getBody());
+        goToDetail.putExtra("taskState", task.getState());
+        startActivity(goToDetail);
+    }
+
+
 }
