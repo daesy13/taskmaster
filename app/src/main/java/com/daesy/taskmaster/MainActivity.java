@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     }
 
 
-    // THIS METHODS DEFINE WHATS HAPPENED WHEN I TASK IS CLICK IN THE RECYCLER VIEW
+    // THIS METHODS DEFINE WHATS HAPPENED WHEN A TASK IS CLICKED IN THE RECYCLER VIEW
     @Override
     public void onTaskSelected(Task task){
         Log.i(TAG, "task title:" +  task.getTitle());

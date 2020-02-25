@@ -12,11 +12,14 @@ import java.util.List;
 
 @Dao
 public interface TaskDao {
+    @Query("SELECT * FROM task WHERE id = :id")
+    public Task getOneTask(long id);
+
     @Query("SELECT * FROM task")
     List<Task> getAll();
 
     @Insert
-    void addTask(Task task);
+    public void addTask(Task task);
 
     @Delete
     void deleteTask(Task task);

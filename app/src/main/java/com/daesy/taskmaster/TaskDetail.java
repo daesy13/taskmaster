@@ -19,10 +19,6 @@ public class TaskDetail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        String taskTitle = getIntent().getStringExtra("task");
-//        TextView title = findViewById(R.id.textView7);
-//        title.setText(taskTitle);
-
         Intent i = getIntent();
 
         String title = i.getExtras().getString("taskTitle");
@@ -32,7 +28,6 @@ public class TaskDetail extends AppCompatActivity {
         TextView titleView = findViewById(R.id.detailTitle);
         TextView bodyView = findViewById(R.id.detailBody);
         TextView stateView = findViewById(R.id.stateView);
-
 
         titleView.setText(title);
         bodyView.setText(body);

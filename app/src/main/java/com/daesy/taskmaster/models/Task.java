@@ -21,7 +21,6 @@ public class Task {
         this.state = "New";
     }
 
-
     public Task(){}
 
     public String getTitle() {
