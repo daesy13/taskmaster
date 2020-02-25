@@ -12,7 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
+import com.apollographql.apollo.GraphQLCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.daesy.taskmaster.models.Task;
+
+import javax.annotation.Nonnull;
+
+import type.CreateTaskInput;
 
 
 // Reference: https://github.com/codefellows/seattle-java-401d9/blob/master/class-26/pokemon/app/src/main/java/com/ferreirae/pokemon/CatchPokemon.java
@@ -22,10 +32,18 @@ public class AddTask extends AppCompatActivity {
 
     static String TAGADD = "ds.addTask";
 
+    private AWSAppSyncClient mAWSAppSyncClient;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        mAWSAppSyncClient = AWSAppSyncClient.builder()
+                .context(getApplicationContext())
+                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
+                .build();
 
         db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
                 .allowMainThreadQueries().build();
@@ -47,16 +65,35 @@ public class AddTask extends AppCompatActivity {
                 EditText addTaskDetail = findViewById(R.id.editText3);
                 String taskDetail = addTaskDetail.getText().toString();
 
-                Task newTask = new Task(taskTitle, taskDetail);
+                CreateTaskInput createTaskInput = CreateTaskInput.builder()
+                        .title(taskTitle).description(taskDetail).status("NEW").build();
 
-                db.taskDao().addTask(newTask);
+                mAWSAppSyncClient.mutate(CreateTaskMutation.builder().input(createTaskInput).build()).enqueue(mutationCallback);
+
 
                 Toast text =Toast.makeText(getApplicationContext(),"Submitted!", Toast.LENGTH_SHORT);
                 text.show();
+//                Task newTask = new Task(taskTitle, taskDetail);
+//
+//                db.taskDao().addTask(newTask);
 
-                AddTask.this.finish();
+
             }
          });
     }
+
+    private GraphQLCall.Callback<CreateTaskMutation.Data> mutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
+            Log.i("Results", "Added Todo");
+
+            AddTask.this.finish();
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e("Errorrrrr", e.toString());
+        }
+    };
 
 }
