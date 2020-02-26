@@ -14,19 +14,34 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.075" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="287dp"
-        android:layout_height="412dp"
-        android:layout_marginTop="52dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allTaskList"
+        android:layout_width="386dp"
+        android:layout_height="463dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:layout_constraintVertical_bias="0.879">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <fragment
+        android:id="@+id/fragment3"
+        android:name="com.daesy.taskmaster.fragments.TaskFragment"
+        android:layout_width="382dp"
+        android:layout_height="472dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
