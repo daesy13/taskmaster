@@ -67,3 +67,16 @@ width=150;  margin-right= 10px;/></br></br></br>
 width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1582506167.png"
 width=150;  margin-right= 10px;/></br></br></br>
+
+
+# LAB 33 - Polish
+
+## Daily Log
+- [x] You can click the all Tasks button to visit the second activity
+- [x] The tasks in the second page are clickable and trigger a toast
+- [x] The toast is descriptive about the task that triggered the toast</br>
+
+<img src="/screenshots/Screenshot_1582684858.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1582684862.png"
+width=150;  margin-right= 10px;/></br></br></br>
