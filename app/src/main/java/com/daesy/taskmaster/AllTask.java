@@ -37,10 +37,7 @@ public class AllTask extends AppCompatActivity implements MyTaskRecyclerViewAdap
         rv.setLayoutManager(new LinearLayoutManager(this));
 //        rv.setAdapter(new MyTaskRecyclerViewAdapter(listOfTasks, this));
         rv.setAdapter(new MyTaskRecyclerViewAdapter(items, this));
-
-
     }
-
     @Override
     public void onTaskSelected(Task task) {
         Toast t = new Toast(this);

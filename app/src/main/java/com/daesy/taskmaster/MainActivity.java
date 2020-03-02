@@ -15,10 +15,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
+import com.apollographql.apollo.GraphQLCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.daesy.taskmaster.models.Task;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import type.CreateTaskInput;
 
 public class MainActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.OnTaskSelectedListener {
 
@@ -28,13 +38,19 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     List<Task> listOfTasks;
     private RecyclerView recyclerView;
     private MyTaskRecyclerViewAdapter myTaskAdapter;
+    //AWS
+    private AWSAppSyncClient awsAppSyncClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //AWS
+        awsAppSyncClient = AWSAppSyncClient.builder()
+                .context(getApplicationContext())
+                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
+                .build();
 
         // ***** THIS WILL CLEAR DB*****
 //        db.taskDao().deleteAllTask();
@@ -48,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
             public void onClick(View view){
                 Intent goToAddTask = new Intent(MainActivity.this, AddTask.class);
                 MainActivity.this.startActivity(goToAddTask);
+
+
             }
         });
 
@@ -100,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
         this.recyclerView.setAdapter(this.myTaskAdapter);
 
+        //AWS
+        runMutation();
+
         // ***** THIS WILL CLEAR DB*****
 //        db.taskDao().deleteAllTask();
 
@@ -119,5 +140,25 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         startActivity(goToDetail);
     }
 
+    private void runMutation(){
+        CreateTaskInput createTaskInput = CreateTaskInput.builder()
+                .title("Crazy Task")
+                .description("crazy description")
+                .build();
+        awsAppSyncClient.mutate(CreateTaskMutation.builder().input(createTaskInput).build())
+                .enqueue(addMutationCallback);
+    }
+
+    private GraphQLCall.Callback<CreateTaskMutation.Data> addMutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
+            Log.i("Results", "Added Task");
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e("Error", e.toString());
+        }
+    };
 
 }
