@@ -92,7 +92,7 @@ width=150;  margin-right= 10px;/></br></br></br>
 - [x] Refactored homepage’s RecyclerView to display all Task entities in DynamoDB.
 </br>
 
-<img src="/screenshots/Screenshot_1582684862.png"
-width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1583224125.png"
+width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screen Shot 2020-03-03 at 12.28.42 AM.png"
 width=300;  margin-right= 10px;/></br></br></br>
