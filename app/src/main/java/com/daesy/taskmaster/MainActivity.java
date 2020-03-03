@@ -9,20 +9,27 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.daesy.taskmaster.models.Task;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         // ***** THIS WILL CLEAR DB*****
 //        db.taskDao().deleteAllTask();
 
+        // Recycler view tasks
         this.listOfTasks = new LinkedList<>();
 
         // BUTTON GO TO ADD TASK
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 MainActivity.this.startActivity(goToAddTask);
 
 
+//                runTaskItemCreateMutation(inputText, inputText);
             }
         });
 
@@ -104,13 +113,13 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
             greeting.setText(name + "'s Tasks");
         }
 
-        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
-                .allowMainThreadQueries().build();
+//        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
+//                .allowMainThreadQueries().build();
 
-
-        this.listOfTasks.clear();
+        this.listOfTasks = new ArrayList<Task>();
+//        this.listOfTasks.clear();
         // Adding all the list from the database to the recycler view
-        this.listOfTasks.addAll(this.db.taskDao().getAll());
+//        this.listOfTasks.addAll(this.db.taskDao().getAll());
 
         //***RECYCLER VIEW SETUP***
         this.recyclerView = findViewById(R.id.taskRecyclerView);
@@ -118,8 +127,11 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
         this.recyclerView.setAdapter(this.myTaskAdapter);
 
+        getTaskItems();
+
+
         //AWS
-        runMutation();
+//        runTaskItemCreateMutation(inputText, inputText);
 
         // ***** THIS WILL CLEAR DB*****
 //        db.taskDao().deleteAllTask();
@@ -140,25 +152,40 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         startActivity(goToDetail);
     }
 
-    private void runMutation(){
-        CreateTaskInput createTaskInput = CreateTaskInput.builder()
-                .title("Crazy Task")
-                .description("crazy description")
-                .build();
-        awsAppSyncClient.mutate(CreateTaskMutation.builder().input(createTaskInput).build())
-                .enqueue(addMutationCallback);
+    public void getTaskItems(){
+        awsAppSyncClient.query(ListTasksQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(taskItemsCallBack);
     }
 
-    private GraphQLCall.Callback<CreateTaskMutation.Data> addMutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
+
+    private GraphQLCall.Callback<ListTasksQuery.Data> taskItemsCallBack = new GraphQLCall.Callback<ListTasksQuery.Data>() {
         @Override
-        public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
-            Log.i("Results", "Added Task");
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            Log.i("TAG", response.data().listTasks().items().toString());
+            if (listOfTasks.size() == 0 || response.data().listTasks().items().size() != listOfTasks.size()) {
+                listOfTasks.clear();
+
+                for (ListTasksQuery.Item task : response.data().listTasks().items()) {
+                    Task newTask = new Task(task.title(), task.description());
+                    listOfTasks.add(newTask);
+                }
+
+                // looper let us send an action to the main ui thread
+                Handler handlerForMainThread = new Handler(Looper.getMainLooper()) {
+                    @Override
+                    public void handleMessage(Message inputMessage) {
+                        RecyclerView recyclerView = findViewById(R.id.taskRecyclerView);
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                };
+                handlerForMainThread.obtainMessage().sendToTarget();
+            }
         }
 
         @Override
         public void onFailure(@Nonnull ApolloException e) {
-            Log.e("Error", e.toString());
+            Log.e("TAG", e.toString());
         }
     };
-
 }

@@ -5,6 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,9 +31,9 @@ public class AddTask extends AppCompatActivity {
 
     MyDatabase db;
 
-    static String TAGADD = "ds.addTask";
+    static String TAG = "ds.addTask";
 
-    private AWSAppSyncClient mAWSAppSyncClient;
+    private AWSAppSyncClient awsAppSyncClient;
 
 
     @Override
@@ -40,60 +41,67 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        mAWSAppSyncClient = AWSAppSyncClient.builder()
+        //AWS
+        awsAppSyncClient = AWSAppSyncClient.builder()
                 .context(getApplicationContext())
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
 
-        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
+        db = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "tasks")
                 .allowMainThreadQueries().build();
 
         // log for oncreate success
-        Log.w(TAGADD, "we are in onCreate");
+        Log.w(TAG, "we are in onCreate");
 
         // AddTask button to go to Task Detail
-        Button addTaskButton =findViewById(R.id.button3);
-        addTaskButton.setOnClickListener(new View.OnClickListener(){
+        Button addTaskButton = findViewById(R.id.button3);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
-
-                EditText addTaskTitle = findViewById(R.id.editText);
-                String taskTitle = addTaskTitle.getText().toString();
-
-
-                EditText addTaskDetail = findViewById(R.id.editText3);
-                String taskDetail = addTaskDetail.getText().toString();
-
-                CreateTaskInput createTaskInput = CreateTaskInput.builder()
-                        .title(taskTitle).description(taskDetail).status("NEW").build();
-
-                mAWSAppSyncClient.mutate(CreateTaskMutation.builder().input(createTaskInput).build()).enqueue(mutationCallback);
-
-
-                Toast text =Toast.makeText(getApplicationContext(),"Submitted!", Toast.LENGTH_SHORT);
+            public void onClick(View view) {
+                createTask();
+                Toast text = Toast.makeText(getApplicationContext(), "Submitted!", Toast.LENGTH_SHORT);
                 text.show();
+            }
+        });
+    }
+
+    public void createTask(){
+
+        EditText addTaskTitle = findViewById(R.id.editText);
+        String taskTitle = addTaskTitle.getText().toString();
+
+
+        EditText addTaskDetail = findViewById(R.id.editText3);
+        String taskDetail = addTaskDetail.getText().toString();
+
+        CreateTaskInput createTaskInput = CreateTaskInput.builder()
+                .title(taskTitle)
+                .description(taskDetail)
+                .status("NEW")
+                .build();
+
+        awsAppSyncClient.mutate(CreateTaskMutation.builder().input(createTaskInput).build())
+            .enqueue(new GraphQLCall.Callback<CreateTaskMutation.Data>() {
+                @Override
+                public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
+                    Log.i(TAG,response.data().toString());
+                    AddTask.this.startActivity(new Intent(AddTask.this, MainActivity.class));
+                }
+
+                @Override
+                public void onFailure(@Nonnull ApolloException e) {
+                    Log.i(TAG,"Error!");
+
+                }
+            });
+
+
+
+
 //                Task newTask = new Task(taskTitle, taskDetail);
 //
 //                db.taskDao().addTask(newTask);
-
-
-            }
-         });
     }
-
-    private GraphQLCall.Callback<CreateTaskMutation.Data> mutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
-        @Override
-        public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
-            Log.i("Results", "Added Todo");
-
-            AddTask.this.finish();
-        }
-
-        @Override
-        public void onFailure(@Nonnull ApolloException e) {
-            Log.e("Errorrrrr", e.toString());
-        }
-    };
 
 }
