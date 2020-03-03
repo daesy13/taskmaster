@@ -96,3 +96,18 @@ width=150;  margin-right= 10px;/></br></br></br>
 width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screen Shot 2020-03-03 at 12.28.42 AM.png"
 width=300;  margin-right= 10px;/></br></br></br>
+
+# LAB 36 - Cognito
+
+## Daily Log
+- [x] Add Cognito to the Amplify setup. 
+- [x] Add in user login and sign up flows to the application, using Cognito’s pre-built UI as appropriate. 
+- [x] Display the logged in user’s username in the app.
+- [x] Allow users to log out of your application.</br>
+
+<img src="/screenshots/Screenshot_1583229364.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583228809.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583230871.png"
+width=150;  margin-right= 10px;/></br></br></br>

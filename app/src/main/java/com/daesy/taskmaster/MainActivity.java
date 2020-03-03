@@ -21,6 +21,11 @@ import android.widget.TextView;
 
 import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.SignOutOptions;
+import com.amazonaws.mobile.client.UserState;
+import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
@@ -97,6 +102,66 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 MainActivity.this.startActivity(goToSettings);
             }
         });
+
+        // LOG OUT BUTTON
+        Button logOutButton = findViewById(R.id.Logout);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AWSMobileClient.getInstance().signOut(SignOutOptions.builder().signOutGlobally(true).build(), new Callback<Void>() {
+                    @Override
+                    public void onResult(final Void result) {
+                        AWSMobileClient.getInstance().showSignIn(MainActivity.this, new Callback<UserStateDetails>() {
+                            @Override
+                            public void onResult(UserStateDetails result) {
+                                Log.d(TAG, "onResult: " + result.getUserState());
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.d(TAG, "onError", e);
+                            }
+                        });
+                        Log.d(TAG, "sign out");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e(TAG, "sign out error", e);
+                    }
+                });
+            }
+        });
+
+
+        // LOGIN ON PAGE LOAD
+        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
+
+                @Override
+                public void onResult(UserStateDetails userStateDetails) {
+                    Log.i("INIT", "onResult: " + userStateDetails.getUserState());
+                    if(userStateDetails.getUserState().equals(UserState.SIGNED_OUT)){
+                        // 'this' refers the the current active activity
+                        AWSMobileClient.getInstance().showSignIn(MainActivity.this, new Callback<UserStateDetails>() {
+                            @Override
+                            public void onResult(UserStateDetails result) {
+                                Log.d(TAG, "onResult: " + result.getUserState());
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e(TAG, "onError: ", e);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.e("INIT", "Initialization error.", e);
+                }
+            }
+        );
     }
 
     // GETTING USERNAME
@@ -104,14 +169,19 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     protected void onResume() {
         super.onResume();
 
-        SharedPreferences userName =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String name = userName.getString("name", "default");
+//        SharedPreferences userName =
+//                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        String name = userName.getString("name", "default");
 
-        if (name != "default") {
-            TextView greeting = findViewById(R.id.textView3);
-            greeting.setText(name + "'s Tasks");
-        }
+        // get data from AWS
+        getTaskItems();
+
+
+        TextView greeting = findViewById(R.id.textView3);
+        String username = AWSMobileClient.getInstance().getUsername();
+        greeting.setText(username + "'s Tasks");
+
+
 
 //        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
 //                .allowMainThreadQueries().build();
@@ -127,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
         this.recyclerView.setAdapter(this.myTaskAdapter);
 
-        getTaskItems();
+//        getTaskItems();
 
 
         //AWS
