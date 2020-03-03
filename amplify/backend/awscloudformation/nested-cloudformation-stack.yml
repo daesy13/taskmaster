@@ -130,6 +130,40 @@
 				}
 			}
 		},
+		"storagetaskPictures": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"Parameters": {
+					"bucketName": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3",
+					"authPolicyName": "s3_amplify_eef4413d",
+					"unauthPolicyName": "s3_amplify_eef4413d",
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
+					"selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
+					"s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject",
+					"s3PublicPolicy": "Public_policy_ac544d67",
+					"s3PermissionsAuthenticatedUploads": "s3:PutObject",
+					"s3UploadsPolicy": "Uploads_policy_ac544d67",
+					"s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject",
+					"s3ProtectedPolicy": "Protected_policy_ac544d67",
+					"s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject",
+					"s3PrivatePolicy": "Private_policy_ac544d67",
+					"AuthenticatedAllowList": "ALLOW",
+					"s3ReadPolicy": "read_policy_ac544d67",
+					"s3PermissionsGuestPublic": "DISALLOW",
+					"s3PermissionsGuestUploads": "DISALLOW",
+					"GuestAllowList": "DISALLOW",
+					"triggerFunction": "NONE",
+					"env": "taskenv"
+				}
+			}
+		},
 		"UpdateRolesWithIDPFunction": {
 			"DependsOn": [
 				"AuthRole",

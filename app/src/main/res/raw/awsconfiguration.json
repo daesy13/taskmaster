@@ -33,5 +33,11 @@
         "Default": {
             "authenticationFlowType": "USER_SRP_AUTH"
         }
+    },
+    "S3TransferUtility": {
+        "Default": {
+            "Bucket": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3105739-taskenv",
+            "Region": "us-west-2"
+        }
     }
 }
