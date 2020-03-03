@@ -80,3 +80,19 @@ width=150;  margin-right= 10px;/></br></br></br>
      width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1582684862.png"
 width=150;  margin-right= 10px;/></br></br></br>
+
+# LAB 34 - Amplify and DynamoDB
+
+## Daily Log
+
+- [x] Created an AWS account and installed the Amplify CLI, and followed the Amplify set up.
+- [x] Created a Task resource that replicates existing Task schema. 
+- [x] Use AWS Amplify to access your data in DynamoDB instead of in Room.
+- [x] Modified Task form to save the data entered in as a Task to DynamoDB.
+- [x] Refactored homepage’s RecyclerView to display all Task entities in DynamoDB.
+</br>
+
+<img src="/screenshots/Screenshot_1582684862.png"
+width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583224125.png"
+width=300;  margin-right= 10px;/></br></br></br>

@@ -18,7 +18,6 @@ import com.daesy.taskmaster.MyTaskRecyclerViewAdapter;
 import com.daesy.taskmaster.R;
 import com.daesy.taskmaster.models.Task;
 import com.daesy.taskmaster.TaskDao;
-import com.daesy.taskmaster.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -102,6 +101,6 @@ public class TaskFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Task task);
     }
 }
