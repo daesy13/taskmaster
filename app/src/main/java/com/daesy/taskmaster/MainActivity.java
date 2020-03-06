@@ -1,18 +1,27 @@
 package com.daesy.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Insert;
 import androidx.room.Room;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +44,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferService;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
@@ -46,6 +56,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
@@ -56,11 +67,13 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     private static final String TAG = "ds.MainActivity";
 
     static MyDatabase db;
+    static String CHANNEL_ID = "111";
     List<Task> listOfTasks;
     private RecyclerView recyclerView;
     private MyTaskRecyclerViewAdapter myTaskAdapter;
     //AWS
     private AWSAppSyncClient awsAppSyncClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +88,42 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
 
+        //CREATING CHANNEL_ID
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel";
+            String description = "description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        //CREATING NOTIFICATION
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("You have a Task")
+                .setContentText("Pending")
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify((int)(Math.random() * 100.0), builder.build());
+
         AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
             @Override
             public void onResult(UserStateDetails userStateDetails) {
-                Log.i(TAG, "AWSMobileClient initialized. User State is " + userStateDetails.getUserState());
-                uploadWithTransferUtility();
+//                Log.i(TAG, "AWSMobileClient initialized. User State is " + userStateDetails.getUserState());
+//                uploadWithTransferUtility();
             }
 
             @Override
@@ -94,6 +138,12 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         // Recycler view tasks
         this.listOfTasks = new LinkedList<>();
 
+        //***RECYCLER VIEW SETUP***
+        this.recyclerView = findViewById(R.id.taskRecyclerView);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
+        this.recyclerView.setAdapter(this.myTaskAdapter);
+
         // BUTTON GO TO ADD TASK
         Button goToAddTaskPage = findViewById(R.id.button);
         goToAddTaskPage.setOnClickListener(new View.OnClickListener(){
@@ -101,9 +151,6 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
             public void onClick(View view){
                 Intent goToAddTask = new Intent(MainActivity.this, AddTask.class);
                 MainActivity.this.startActivity(goToAddTask);
-
-
-//                runTaskItemCreateMutation(inputText, inputText);
             }
         });
 
@@ -173,8 +220,6 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
 //                                if(result.getUserState().equals(UserState.SIGNED_IN)){
 //                                    uploadWithTransferUtility();
 //                                }
-
-
                             }
 
                             @Override
@@ -185,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                     }
 
                 }
-
 
                 @Override
                 public void onError(Exception e) {
@@ -201,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     @Override
     protected void onResume() {
         super.onResume();
-
 //        SharedPreferences userName =
 //                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //        String name = userName.getString("name", "default");
@@ -209,40 +252,23 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         // get data from AWS
         getTaskItems();
 
-
         TextView greeting = findViewById(R.id.textView3);
         String username = AWSMobileClient.getInstance().getUsername();
         greeting.setText(username + "'s Tasks");
 
-
-
 //        db = Room.databaseBuilder(getApplicationContext(),MyDatabase.class,"tasks")
 //                .allowMainThreadQueries().build();
-
-        this.listOfTasks = new ArrayList<Task>();
 //        this.listOfTasks.clear();
         // Adding all the list from the database to the recycler view
 //        this.listOfTasks.addAll(this.db.taskDao().getAll());
-
-        //***RECYCLER VIEW SETUP***
-        this.recyclerView = findViewById(R.id.taskRecyclerView);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.myTaskAdapter = new MyTaskRecyclerViewAdapter(listOfTasks, this);
-        this.recyclerView.setAdapter(this.myTaskAdapter);
-
 //        getTaskItems();
-
-
         //AWS
 //        runTaskItemCreateMutation(inputText, inputText);
-
         // ***** THIS WILL CLEAR DB*****
 //        db.taskDao().deleteAllTask();
-
         // this triggers recycler view to update
 //        this.myTaskAdapter.notifyDataSetChanged();
     }
-
 
     // THIS METHODS DEFINE WHATS HAPPENED WHEN A TASK IS CLICKED IN THE RECYCLER VIEW
     @Override
@@ -293,63 +319,5 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     };
 
 
-    public void uploadWithTransferUtility() {
 
-        TransferUtility transferUtility =
-                TransferUtility.builder()
-                        .context(getApplicationContext())
-                        .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
-                        .s3Client(new AmazonS3Client(AWSMobileClient.getInstance()))
-                        .build();
-
-        File file = new File(getApplicationContext().getFilesDir(), "sample.txt");
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.append("Howdy World!");
-            writer.close();
-        }
-        catch(Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-
-        TransferObserver uploadObserver =
-                transferUtility.upload(
-                        "public/sample.txt",
-                        new File(getApplicationContext().getFilesDir(),"sample.txt"));
-
-        // Attach a listener to the observer to get state update and progress notifications
-        uploadObserver.setTransferListener(new TransferListener() {
-
-            @Override
-            public void onStateChanged(int id, TransferState state) {
-                if (TransferState.COMPLETED == state) {
-                    // Handle a completed upload.
-                }
-            }
-
-            @Override
-            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-                float percentDonef = ((float) bytesCurrent / (float) bytesTotal) * 100;
-                int percentDone = (int)percentDonef;
-
-                Log.d(TAG, "ID:" + id + " bytesCurrent: " + bytesCurrent
-                        + " bytesTotal: " + bytesTotal + " " + percentDone + "%");
-            }
-
-            @Override
-            public void onError(int id, Exception ex) {
-                // Handle errors
-            }
-
-        });
-
-        // If you prefer to poll for the data, instead of attaching a
-        // listener, check for the state and progress in the observer.
-        if (TransferState.COMPLETED == uploadObserver.getState()) {
-            // Handle a completed upload.
-        }
-
-        Log.d(TAG, "Bytes Transferred: " + uploadObserver.getBytesTransferred());
-        Log.d(TAG, "Bytes Total: " + uploadObserver.getBytesTotal());
-    }
 }
