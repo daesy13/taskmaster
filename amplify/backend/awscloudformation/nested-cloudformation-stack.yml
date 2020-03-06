@@ -89,7 +89,7 @@
 				"TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/auth/taskmasterd7e57c15-cloudformation-template.yml",
 				"Parameters": {
 					"identityPoolName": "taskmasterd7e57c15_identitypool_d7e57c15",
-					"allowUnauthenticatedIdentities": false,
+					"allowUnauthenticatedIdentities": true,
 					"resourceNameTruncated": "taskmad7e57c15",
 					"userPoolName": "taskmasterd7e57c15_userpool_d7e57c15",
 					"autoVerifiedAttributes": "email",

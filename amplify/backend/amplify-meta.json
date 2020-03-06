@@ -35,7 +35,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"logicalId": "apiamplifyDatasource"
 			},
-			"lastPushTimeStamp": "2020-03-03T11:27:17.068Z",
+			"lastPushTimeStamp": "2020-03-06T13:57:33.454Z",
 			"lastPushDirHash": "ZARiCAGLwv/GsbdGkSpdfngKaMI="
 		}
 	},
@@ -49,7 +49,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/auth/taskmasterd7e57c15-cloudformation-template.yml",
 				"logicalId": "authtaskmasterd7e57c15"
 			},
-			"lastPushTimeStamp": "2020-03-03T11:27:17.071Z",
+			"lastPushTimeStamp": "2020-03-06T13:57:33.461Z",
 			"output": {
 				"AppClientSecret": "1s240t3vkgr9642rpr4649foeh3nbak0m1tduvhs8dgako0n7960",
 				"UserPoolId": "us-west-2_ZMhkeptDf",
@@ -59,7 +59,7 @@
 				"IdentityPoolName": "taskmasterd7e57c15_identitypool_d7e57c15__taskenv",
 				"UserPoolName": "taskmasterd7e57c15_userpool_d7e57c15"
 			},
-			"lastPushDirHash": "wqcJHOLmbaO6OpJY388t/72ByiA="
+			"lastPushDirHash": "WV8+OtCGYo1i4kG6hyWWCpDw6m4="
 		}
 	},
 	"storage": {
@@ -70,12 +70,36 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
 				"logicalId": "storagetaskPictures"
 			},
-			"lastPushTimeStamp": "2020-03-03T11:27:17.076Z",
+			"lastPushTimeStamp": "2020-03-06T13:57:33.459Z",
 			"output": {
 				"BucketName": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3105739-taskenv",
 				"Region": "us-west-2"
 			},
 			"lastPushDirHash": "xWPRQ6X6mG1uXcEyaAGvCXd0OXg="
+		}
+	},
+	"notifications": {
+		"TaskmasterAA6FJ": {
+			"service": "Pinpoint",
+			"output": {
+				"Arn": "arn:aws:mobiletargeting:us-west-2:918207092759:apps/67c23d825d0a429a86803e9ab9aec55f",
+				"Id": "67c23d825d0a429a86803e9ab9aec55f",
+				"Name": "TaskmasterAA6FJ-taskenv",
+				"tags": {},
+				"Region": "us-west-2",
+				"FCM": {
+					"ApplicationId": "67c23d825d0a429a86803e9ab9aec55f",
+					"CreationDate": "2020-03-06T13:55:20.503Z",
+					"Enabled": true,
+					"HasCredential": true,
+					"Id": "gcm",
+					"IsArchived": false,
+					"LastModifiedDate": "2020-03-06T13:55:20.503Z",
+					"Platform": "GCM",
+					"Version": 1
+				}
+			},
+			"lastPushTimeStamp": "2020-03-06T13:52:22.286Z"
 		}
 	}
 }
