@@ -39,5 +39,16 @@
             "Bucket": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3105739-taskenv",
             "Region": "us-west-2"
         }
+    },
+    "PinpointAnalytics": {
+        "Default": {
+            "AppId": "67c23d825d0a429a86803e9ab9aec55f",
+            "Region": "us-west-2"
+        }
+    },
+    "PinpointTargeting": {
+        "Default": {
+            "Region": "us-west-2"
+        }
     }
 }
