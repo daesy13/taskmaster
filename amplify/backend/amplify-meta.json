@@ -1,105 +1,105 @@
 {
-	"providers": {
-		"awscloudformation": {
-			"AuthRoleName": "amplify-taskmaster-taskenv-105739-authRole",
-			"UnauthRoleArn": "arn:aws:iam::918207092759:role/amplify-taskmaster-taskenv-105739-unauthRole",
-			"AuthRoleArn": "arn:aws:iam::918207092759:role/amplify-taskmaster-taskenv-105739-authRole",
-			"Region": "us-west-2",
-			"DeploymentBucketName": "amplify-taskmaster-taskenv-105739-deployment",
-			"UnauthRoleName": "amplify-taskmaster-taskenv-105739-unauthRole",
-			"StackName": "amplify-taskmaster-taskenv-105739",
-			"StackId": "arn:aws:cloudformation:us-west-2:918207092759:stack/amplify-taskmaster-taskenv-105739/c0c239e0-5800-11ea-82ab-0259df39583c",
-			"AmplifyAppId": "d1adm3jn93bxi8"
-		}
-	},
-	"api": {
-		"amplifyDatasource": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"authConfig": {
-					"additionalAuthenticationProviders": [],
-					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "task",
-							"apiKeyExpirationDays": "30"
-						}
-					}
-				},
-				"GraphQLAPIIdOutput": "alnpgoijf5f7xewvgw6ey4uwla",
-				"GraphQLAPIEndpointOutput": "https://dkjs24meabapzkzc377s3rgqme.appsync-api.us-west-2.amazonaws.com/graphql",
-				"GraphQLAPIKeyOutput": "da2-wu3oipeze5gvxal7arlretgqyy"
-			},
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-				"logicalId": "apiamplifyDatasource"
-			},
-			"lastPushTimeStamp": "2020-03-06T13:57:33.454Z",
-			"lastPushDirHash": "ZARiCAGLwv/GsbdGkSpdfngKaMI="
-		}
-	},
-	"auth": {
-		"taskmasterd7e57c15": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"customAuth": false,
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/auth/taskmasterd7e57c15-cloudformation-template.yml",
-				"logicalId": "authtaskmasterd7e57c15"
-			},
-			"lastPushTimeStamp": "2020-03-06T13:57:33.461Z",
-			"output": {
-				"AppClientSecret": "1s240t3vkgr9642rpr4649foeh3nbak0m1tduvhs8dgako0n7960",
-				"UserPoolId": "us-west-2_ZMhkeptDf",
-				"AppClientIDWeb": "4jvmo7c9vdr9hr96arpeoiphfp",
-				"AppClientID": "5aq007i7p1mj9p0rae2e6ql1oc",
-				"IdentityPoolId": "us-west-2:3d4c67ce-1202-4f09-9b02-8ed684ff5f84",
-				"IdentityPoolName": "taskmasterd7e57c15_identitypool_d7e57c15__taskenv",
-				"UserPoolName": "taskmasterd7e57c15_userpool_d7e57c15"
-			},
-			"lastPushDirHash": "WV8+OtCGYo1i4kG6hyWWCpDw6m4="
-		}
-	},
-	"storage": {
-		"taskPictures": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
-				"logicalId": "storagetaskPictures"
-			},
-			"lastPushTimeStamp": "2020-03-06T13:57:33.459Z",
-			"output": {
-				"BucketName": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3105739-taskenv",
-				"Region": "us-west-2"
-			},
-			"lastPushDirHash": "xWPRQ6X6mG1uXcEyaAGvCXd0OXg="
-		}
-	},
-	"notifications": {
-		"TaskmasterAA6FJ": {
-			"service": "Pinpoint",
-			"output": {
-				"Arn": "arn:aws:mobiletargeting:us-west-2:918207092759:apps/67c23d825d0a429a86803e9ab9aec55f",
-				"Id": "67c23d825d0a429a86803e9ab9aec55f",
-				"Name": "TaskmasterAA6FJ-taskenv",
-				"tags": {},
-				"Region": "us-west-2",
-				"FCM": {
-					"ApplicationId": "67c23d825d0a429a86803e9ab9aec55f",
-					"CreationDate": "2020-03-06T13:55:20.503Z",
-					"Enabled": true,
-					"HasCredential": true,
-					"Id": "gcm",
-					"IsArchived": false,
-					"LastModifiedDate": "2020-03-06T13:55:20.503Z",
-					"Platform": "GCM",
-					"Version": 1
-				}
-			},
-			"lastPushTimeStamp": "2020-03-06T13:52:22.286Z"
-		}
-	}
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-taskmaster-taskenv-105739-authRole",
+            "UnauthRoleArn": "arn:aws:iam::918207092759:role/amplify-taskmaster-taskenv-105739-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::918207092759:role/amplify-taskmaster-taskenv-105739-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-taskmaster-taskenv-105739-deployment",
+            "UnauthRoleName": "amplify-taskmaster-taskenv-105739-unauthRole",
+            "StackName": "amplify-taskmaster-taskenv-105739",
+            "StackId": "arn:aws:cloudformation:us-west-2:918207092759:stack/amplify-taskmaster-taskenv-105739/c0c239e0-5800-11ea-82ab-0259df39583c",
+            "AmplifyAppId": "d1adm3jn93bxi8"
+        }
+    },
+    "api": {
+        "amplifyDatasource": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "task",
+                            "apiKeyExpirationDays": "30"
+                        }
+                    }
+                },
+                "GraphQLAPIIdOutput": "alnpgoijf5f7xewvgw6ey4uwla",
+                "GraphQLAPIEndpointOutput": "https://dkjs24meabapzkzc377s3rgqme.appsync-api.us-west-2.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-wu3oipeze5gvxal7arlretgqyy"
+            },
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apiamplifyDatasource"
+            },
+            "lastPushTimeStamp": "2020-03-08T07:32:02.147Z",
+            "lastPushDirHash": "ZARiCAGLwv/GsbdGkSpdfngKaMI="
+        }
+    },
+    "auth": {
+        "taskmasterd7e57c15": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false,
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/auth/taskmasterd7e57c15-cloudformation-template.yml",
+                "logicalId": "authtaskmasterd7e57c15"
+            },
+            "lastPushTimeStamp": "2020-03-08T07:32:02.149Z",
+            "output": {
+                "AppClientSecret": "1s240t3vkgr9642rpr4649foeh3nbak0m1tduvhs8dgako0n7960",
+                "UserPoolId": "us-west-2_ZMhkeptDf",
+                "AppClientIDWeb": "4jvmo7c9vdr9hr96arpeoiphfp",
+                "AppClientID": "5aq007i7p1mj9p0rae2e6ql1oc",
+                "IdentityPoolId": "us-west-2:3d4c67ce-1202-4f09-9b02-8ed684ff5f84",
+                "IdentityPoolName": "taskmasterd7e57c15_identitypool_d7e57c15__taskenv",
+                "UserPoolName": "taskmasterd7e57c15_userpool_d7e57c15"
+            },
+            "lastPushDirHash": "WV8+OtCGYo1i4kG6hyWWCpDw6m4="
+        }
+    },
+    "storage": {
+        "taskPictures": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-taskmaster-taskenv-105739-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+                "logicalId": "storagetaskPictures"
+            },
+            "lastPushTimeStamp": "2020-03-08T07:32:02.150Z",
+            "output": {
+                "BucketName": "taskmasterd8edc4fad3744ef48a3ac03191ce9ff3105739-taskenv",
+                "Region": "us-west-2"
+            },
+            "lastPushDirHash": "xWPRQ6X6mG1uXcEyaAGvCXd0OXg="
+        }
+    },
+    "notifications": {
+        "TaskmasterAA6FJ": {
+            "service": "Pinpoint",
+            "output": {
+                "Arn": "arn:aws:mobiletargeting:us-west-2:918207092759:apps/67c23d825d0a429a86803e9ab9aec55f",
+                "Id": "67c23d825d0a429a86803e9ab9aec55f",
+                "Name": "TaskmasterAA6FJ-taskenv",
+                "tags": {},
+                "Region": "us-west-2",
+                "FCM": {
+                    "ApplicationId": "67c23d825d0a429a86803e9ab9aec55f",
+                    "CreationDate": "2020-03-06T13:55:20.503Z",
+                    "Enabled": true,
+                    "HasCredential": true,
+                    "Id": "gcm",
+                    "IsArchived": false,
+                    "LastModifiedDate": "2020-03-06T13:55:20.503Z",
+                    "Platform": "GCM",
+                    "Version": 1
+                }
+            },
+            "lastPushTimeStamp": "2020-03-06T13:52:22.286Z"
+        }
+    }
 }

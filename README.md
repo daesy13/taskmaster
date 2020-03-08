@@ -1,3 +1,29 @@
+<!-- ****** -->
+# LAB 40 - Notifications
+
+## Daily Log
+- [x] When a new task is created, set up an alert about that new task.</br>
+
+<img src="/screenshots/Screenshot_1583505671.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583507278.png"
+width=150;  margin-right= 10px;/></br></br></br>
+
+<!-- ****** -->
+# LAB 37 & 38 - S3 Uploads
+
+## Daily Log
+- [x] On the “Add a Task” activity, allow users to optionally select a file to attach to that task. If a user attaches a file to a task, that file should be uploaded to S3, and associated with that task.
+- [x] On the Task detail activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity. (If the file is any other type, you should display a link to it.)</br>
+
+<img src="/screenshots/Screenshot_1583668042.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583668054.png"
+     width=150;  margin-right= 10px;/>
+<img src="/screenshots/Screenshot_1583668064.png"
+width=150;  margin-right= 10px;/></br></br></br>
+
+<!-- ****** -->
 # LAB 36 - Cognito
 
 ## Daily Log
@@ -115,3 +141,4 @@ width=150;  margin-right= 10px;/>
 width=150;  margin-right= 10px;/>
 <img src="/screenshots/Screenshot_1581993139.png"
 width=150;  margin-right= 10px;/></br></br></br>
+
